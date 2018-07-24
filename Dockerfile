@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/base-notebook:27ba57364579
+FROM jupyter/base-notebook:4417b81d04b7
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
@@ -55,6 +55,7 @@ RUN conda install -c conda-forge --yes \
     hdf5 \
     ipyleaflet \
     ipywidgets \
+    lxml \
     matplotlib \ 
     netcdf4 \
     networkx \
@@ -68,17 +69,29 @@ RUN conda install -c conda-forge --yes \
     requests \
     scikit-learn \
     seaborn \
+    streamz \
     vega \
     vega_datasets \
     xarray && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
 
+# PIP Packages
+RUN pip install python-cmr
+
+RUN pip install dash==0.20.0 \
+    dash-renderer==0.11.3 \
+    dash-html-components==0.8.0 \
+    dash-core-components==0.18.1
+
+RUN pip install nbgitpuller
+
+RUN pip install git+https://github.com/cormorack/yodapy.git
 
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix 
 RUN jupyter nbextension enable --py ipyleaflet --sys-prefix
-
+RUN jupyter serverextension enable --py nbgitpuller --sys-prefix
 # Also activate ipywidgets extension for JupyterLab
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.31.0 && \
     npm cache clean && \
@@ -92,14 +105,6 @@ RUN cd /tmp && \
     jupyter nbextension install facets-dist/ --sys-prefix && \
     rm -rf facets && \
     fix-permissions $CONDA_DIR
-
-# PIP Packages
-RUN pip install python-cmr
-
-RUN pip install dash==0.20.0 \
-    dash-renderer==0.11.3 \
-    dash-html-components==0.8.0 \
-    dash-core-components==0.18.1
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
