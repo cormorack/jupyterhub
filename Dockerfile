@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/base-notebook:4417b81d04b7
+FROM jupyter/base-notebook:27ba57364579
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
