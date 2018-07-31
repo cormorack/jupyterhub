@@ -35,80 +35,26 @@ RUN cat /usr/local/bin/start.sh
 
 USER $NB_USER
 
+RUN mkdir /home/$NB_USER/tmp
+COPY base-env.yml /home/$NB_USER/tmp/base-env.yml
 # Install Python 3 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
 
-RUN conda install -c bokeh --yes \
-    datashader
+RUN conda env update --name root --file /home/$NB_USER/tmp/base-env.yml 
 
-RUN conda install -c conda-forge --yes \
-    altair \
-    basemap \
-    basemap-data-hires \
-    boto \
-    boto3 \
-    bokeh \ 
-    cartopy \
-    cmocean \
-    dask \
-    dask-ml \
-    dill \
-    earthsim \
-    erddapy \
-    fiona \
-    folium \
-    h5py \ 
-    hdf5 \
-    ipyleaflet \
-    ipywidgets \
-    geolinks \
-    geopandas \
-    geoviews \
-    gridgeo \
-    ioos_tools \
-    iris>=1.12 \
-    lxml \
-    matplotlib \ 
-    netcdf4 \
-    networkx \
-    numba \
-    numpy \
-    owslib \
-    obspy \
-    palettable \ 
-    pandas \
-    pillow \
-    plotly \
-    pyoos \
-    requests \
-    rise \
-    rtree \
-    scipy \
-    scikit-learn \
-    seaborn \
-    shapely \
-    streamz \
-    vega \
-    vega_datasets \
-    xlrd \
-    xarray && \
-    conda remove --quiet --yes --force qt pyqt && \
+RUN rm -rf /home/$NB_USER/tmp
+
+# Install tutorial environments
+RUN git clone https://github.com/oceanhackweek/ohw2018_tutorials.git && \
+    cd ohw2018_tutorials && \
+    conda env update --name root --file day2/ioos_data_access/environment.yml && \
+    conda env update --name root --file day2/ooi_data_access/environment.yml && \
+    conda env update --name root --file day3/geospatial_and_mapping_tools/environment.yml && \
+    conda env update --name root --file day4/data-mining/environment.yml && \
     conda clean -tipsy
 
-# PIP Packages
-RUN pip install python-cmr
-
-RUN pip install dash==0.20.0 \
-    dash-renderer==0.11.3 \
-    dash-html-components==0.8.0 \
-    dash-core-components==0.18.1
-
-RUN pip install nbgitpuller
-
-RUN pip install pycamhd
-
-RUN pip install git+https://github.com/cormorack/yodapy.git
+RUN rm -rf /home/$NB_USER/ohw2018_tutorials
 
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix 
