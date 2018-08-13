@@ -49,12 +49,25 @@ RUN conda install -c conda-forge --yes \
     boto \
     boto3 \
     bokeh \ 
-    cloudpickle \
+    cartopy \
+    cmocean \
+    dask \
+    dask-ml \
     dill \
+    earthsim \
+    erdappy \
+    fiona \
+    folium \
     h5py \ 
     hdf5 \
     ipyleaflet \
     ipywidgets \
+    geolinks \
+    geopandas \
+    geoviews \
+    gridgeo \
+    ioos_tools \
+    iris>=1.12 \
     lxml \
     matplotlib \ 
     netcdf4 \
@@ -62,16 +75,23 @@ RUN conda install -c conda-forge --yes \
     numba \
     numpy \
     owslib \
-    obspy \ 
+    obspy \
+    palettable \ 
     pandas \
     pillow \
     plotly \
+    pyoos \
     requests \
+    rise \
+    rtree \
+    scipy \
     scikit-learn \
     seaborn \
+    shapely \
     streamz \
     vega \
     vega_datasets \
+    xlrd \
     xarray && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
@@ -85,6 +105,8 @@ RUN pip install dash==0.20.0 \
     dash-core-components==0.18.1
 
 RUN pip install nbgitpuller
+
+RUN pip install pycamhd
 
 RUN pip install git+https://github.com/cormorack/yodapy.git
 
