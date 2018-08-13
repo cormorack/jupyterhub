@@ -55,7 +55,7 @@ RUN conda install -c conda-forge --yes \
     dask-ml \
     dill \
     earthsim \
-    erdappy \
+    erddapy \
     fiona \
     folium \
     h5py \ 
