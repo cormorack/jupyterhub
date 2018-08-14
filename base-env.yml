@@ -1,0 +1,40 @@
+name: baseenv
+channels:
+  - conda-forge
+dependencies:
+  - datashader
+  - altair
+  - basemap
+  - basemap-data-hires
+  - boto
+  - boto3
+  - bokeh 
+  - cloudpickle
+  - dill
+  - h5py 
+  - hdf5
+  - ipyleaflet
+  - ipywidgets
+  - widgetsnbextension
+  - lxml
+  - networkx
+  - numba
+  - owslib
+  - obspy 
+  - pandas
+  - pillow
+  - plotly
+  - requests
+  - scikit-learn
+  - seaborn
+  - vega
+  - vega_datasets
+  - xarray
+  - pip:
+    - python-cmr
+    - dash==0.20.0
+    - dash-renderer==0.11.3
+    - dash-html-components==0.8.0
+    - dash-core-components==0.18.1
+    - nbgitpuller
+    - git+https://github.com/cormorack/yodapy.git
