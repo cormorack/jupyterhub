@@ -41,6 +41,7 @@ COPY base-env.yml /home/$NB_USER/tmp/base-env.yml
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
 
+RUN conda config --remove channels defaults
 RUN conda env update --name root --file /home/$NB_USER/tmp/base-env.yml 
 
 RUN rm -rf /home/$NB_USER/tmp
