@@ -35,6 +35,11 @@ RUN cat /usr/local/bin/start.sh
 
 USER $NB_USER
 
+RUN echo pwd
+
+RUN wget https://s3-us-west-2.amazonaws.com/oceanhackweek2018/whale_data.zip -P /home/$NB_USER && \
+    unzip /home/$NB_USER/whale_data.zip -d /home/$NB_USER
+
 RUN mkdir /home/$NB_USER/tmp
 COPY base-env.yml /home/$NB_USER/tmp/base-env.yml
 # Install Python 3 packages
