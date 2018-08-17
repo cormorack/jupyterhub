@@ -35,11 +35,6 @@ RUN cat /usr/local/bin/start.sh
 
 USER $NB_USER
 
-RUN echo pwd
-
-RUN wget https://s3-us-west-2.amazonaws.com/oceanhackweek2018/whale_data.zip -P /home/$NB_USER && \
-    unzip /home/$NB_USER/whale_data.zip -d /home/$NB_USER
-
 RUN mkdir /home/$NB_USER/tmp
 COPY base-env.yml /home/$NB_USER/tmp/base-env.yml
 # Install Python 3 packages
@@ -62,6 +57,11 @@ RUN git clone https://github.com/oceanhackweek/ohw2018_tutorials.git && \
 
 RUN rm -rf /home/$NB_USER/ohw2018_tutorials
 
+RUN wget https://s3-us-west-2.amazonaws.com/oceanhackweek2018/whale_data.zip -P /home/$NB_USER && \
+    unzip /home/$NB_USER/whale_data.zip -d /home/$NB_USER
+    
+RUN echo $PWD
+    
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix 
 RUN jupyter nbextension enable --py ipyleaflet --sys-prefix
