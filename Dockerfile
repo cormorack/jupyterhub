@@ -52,16 +52,12 @@ RUN git clone https://github.com/oceanhackweek/ohw2018_tutorials.git && \
     conda env update --name root --file day2/ioos_data_access/environment.yml && \
     conda env update --name root --file day2/ooi_data_access/environment.yml && \
     conda env update --name root --file day3/geospatial_and_mapping_tools/environment.yml && \
+    conda env update --name root --file day3/synoptics/environment.yml && \
     conda env update --name root --file day4/data-mining/environment.yml && \
     conda clean -tipsy
 
 RUN rm -rf /home/$NB_USER/ohw2018_tutorials
-
-RUN wget https://s3-us-west-2.amazonaws.com/oceanhackweek2018/whale_data.zip -P /home/$NB_USER && \
-    unzip /home/$NB_USER/whale_data.zip -d /home/$NB_USER
-    
-RUN echo $PWD
-    
+     
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix 
 RUN jupyter nbextension enable --py ipyleaflet --sys-prefix
