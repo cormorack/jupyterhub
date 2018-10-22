@@ -81,4 +81,15 @@ ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
     fix-permissions /home/$NB_USER
 
+# pip install yodapy
+RUN cd /tmp && \
+    git clone https://github.com/lsetiawan/yodapy.git && \
+    cd yodapy && \
+    conda create -n yodapy -c conda-forge --yes python=3.6 --file requirements.txt --file requirements-dev.txt && \
+    source activate yodapy && \
+    pip install -e . && \
+    rm -rf yodapy && \
+    fix-permissions $CONDA_DIR
+
+pip install -e .
 USER $NB_USER
